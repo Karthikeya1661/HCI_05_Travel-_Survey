@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Survey</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #74EBD5 0%, #ACB6E5 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .container {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 1200px; /* Increased max-width for desktop view */
+            text-align: center;
+        }
+        h1 {
+            margin-bottom: 20px;
+            font-size: 36px;
+            color: #333;
+        }
+        .question {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #444;
+        }
+        input, select, button {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #FF5722;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #E64A19;
+        }
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+            padding: 20px;
+            background-color: #f3f3f3;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            display: none;
+            text-align: left;
+        }
+        .horizontal-layout {
+            display: grid; /* Use grid layout for destination cards */
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Responsive grid */
+            gap: 20px; /* Adds space between cards */
+            padding: 20px 0;
+        }
+        .horizontal-card {
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background-color: #fff;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+        .horizontal-card:hover {
+            transform: scale(1.05);
+        }
+        .horizontal-card img {
+            width: 100%;
+            border-radius: 10px;
+            height: 150px; /* Fixed height for uniformity */
+            object-fit: cover; /* Ensures the image covers the area */
+        }
+        .converter {
+            margin-top: 20px;
+            display: none; /* Initially hidden */
+        }
+        .converter h2 {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Travel Survey</h1>
+        <form id="surveyForm">
+            <div class="question">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required placeholder="Enter your name">
+                <button type="button" class="nextButton">Next</button>
+            </div>
+
+            <div class="question" style="display: none;">
+                <label for="age">Age:</label>
+                <input type="number" id="age" name="age" required placeholder="Enter your age">
+                <button type="button" class="nextButton">Next</button>
+            </div>
+
+            <div class="question" style="display: none;">
+                <label for="destination">Destination:</label>
+                <select id="destination" name=" destination" required>
+                    <option value="beach">Beach</option>
+                    <option value="mountains">Mountains</option>
+                    <option value="city">City</option>
+                    <option value="countryside">Countryside</option>
+                </select>
+                <button type="button" class="nextButton">Next</button>
+            </div>
+
+            <div class="question" style="display: none;">
+                <label for="weather">Preferred Weather:</label>
+                <select id="weather" name="weather" required>
+                    <option value="sunny">Sunny</option>
+                    <option value="cloudy">Cloudy</option>
+                    <option value="rainy">Rainy</option>
+                    <option value="snowy">Snowy</option>
+                </select>
+                <button type="button" class="nextButton">Next</button>
+            </div>
+
+            <div class="question" style="display: none;">
+                <label for="activities">Preferred Activities:</label>
+                <select id="activities" name="activities" required>
+                    <option value="relaxing">Relaxing</option>
+                    <option value="adventure">Adventure</option>
+                    <option value="sightseeing">Sightseeing</option>
+                    <option value="cultural">Cultural</option>
+                </select>
+                <button type="button" class="nextButton">Next</button>
+            </div>
+
+            <div class="question" style="display: none;">
+                <label for="accommodation">Preferred Accommodation:</label>
+                <select id="accommodation" name="accommodation" required>
+                    <option value="hotel">Hotel</option>
+                    <option value="resort">Resort</option>
+                    <option value="hostel">Hostel</option>
+                    <option value="bnb">Bed & Breakfast</option>
+                </select>
+                <button type="button" class="nextButton">Next</button>
+            </div>
+
+            <div class="question" style="display: none;">
+                <label for="budget">Travel Budget:</label>
+                <select id="budget" name="budget" required>
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
+                </select>
+                <button type="button" class="nextButton">Next</button>
+            </div>
+
+            <div class="question" style="display: none;">
+                <label for="duration">Preferred Travel Duration:</label>
+                <select id="duration" name="duration" required>
+                    <option value="short">Short (1-3 days)</option>
+                    <option value="medium">Medium (4-7 days)</option>
+                    <option value="long">Long (8+ days)</option>
+                </select>
+                <button type="button" class="nextButton">Next</button>
+            </div>
+
+            <div class="question" style="display: none;">
+                <label for="season">Preferred Travel Season:</label>
+                <select id="season" name="season" required>
+                    <option value="spring">Spring</option>
+                    <option value="summer">Summer</option>
+                    <option value="autumn">Autumn</option>
+                    <option value="winter">Winter</option>
+                </select>
+                <button type="button" class="nextButton">Next</button>
+            </div>
+
+            <div class="question" style="display: none;">
+                <label for="groupSize">Traveling with:</label>
+                <select id="groupSize" name="groupSize" required>
+                    <option value="solo">Solo</option>
+                    <option value="couple">Couple</option>
+                    <option value="family">Family</option>
+                    <option value="friends">Friends</option>
+                </select>
+                <button type="submit">Submit</button>
+            </div>
+        </form>
+
+        <div id="result" class="horizontal-layout">
+            <!-- Destination cards will be injected here by JavaScript -->
+        </div>
+
+        <div class="converter" id="converter" style="display: none;">
+            <h2>Currency Converter</h2>
+            <p>Convert amounts to the destination currency:</p>
+            <label for="inputCurrency">Input Currency:</label>
+            <select id="inputCurrency">
+                <option value="USD">US Dollar (USD)</option>
+                <option value="INR">Indian Rupee (INR)</option>
+            </select>
+
+            <label for="inputAmount">Amount:</label>
+            <input type="number" id="inputAmount" placeholder="Enter amount " >
+
+            <p id="conversionResult"></p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('surveyForm');
+            const questions = form.querySelectorAll('.question');
+            const nextButtons = form.querySelectorAll('.nextButton');
+            const result = document.getElementById('result');
+            const converter = document.getElementById('converter');
+            const inputCurrency = document.getElementById('inputCurrency');
+            const inputAmount = document.getElementById('inputAmount');
+            const conversionResult = document.getElementById('conversionResult');
+            let destinationCurrency = 'USD'; 
+
+            const destinations = {
+                beach: [
+                    {
+                        name: "Maldives",
+                        image: "maldives.jpeg",
+                        details: "The Maldives is known for its stunning white-sand beaches, crystal-clear waters, and luxurious overwater bungalows. It's a perfect destination for relaxation and water activities.",
+                        link: "https://www.visitmaldives.com",
+                        bestMonths: "November to April",
+                        cost: "$2,500 - $4,000",
+                        currency: "USD"
+                    },
+                    {
+                        name: "Hawaii",
+                        image: "hawaii.jpeg",
+                        details: "Hawaii offers beautiful beaches, volcanic landscapes, and vibrant culture. It’s great for both relaxation and adventure.",
+                        link: "https://www.gohawaii.com",
+                        bestMonths: "April to October",
+                        cost: "$2,000 - $3,500",
+                        currency: "USD"
+                    },
+                    {
+                        name: "Bali",
+                        image: "bali.jpeg",
+                        details: "Bali is famous for its stunning beaches, temples, and vibrant culture. It's a perfect destination for relaxation, adventure, and cultural experiences.",
+                        link: "https://www.visitbali.com",
+                        bestMonths: "May to September",
+                        cost: "$1,500 - $3,000",
+                        currency: "IDR"
+                    }
+                ],
+                mountains: [
+                    {
+                        name: "Swiss Alps",
+                        image: "swiss_alps.jpeg",
+                        details: "The Swiss Alps offer breathtaking mountain scenery, world-class skiing, and charming alpine villages. It's ideal for adventure seekers and nature lovers.",
+                        link: "https://www.myswitzerland.com/en/destinations/swiss-alps/",
+                        bestMonths: "December to March",
+                        cost: "$3,000 - $5,000",
+                        currency: "CHF"
+                    },
+                    {
+                        name: "Rocky Mountains",
+                        image: "rocky_mountains.jpeg",
+                        details: "The Rocky Mountains are known for their stunning peaks, extensive hiking trails, and wildlife. Perfect for outdoor enthusiasts.",
+                        link: "https://www.rockymountainnationalpark.com",
+                        bestMonths: "June to September",
+                        cost: "$2,000 - $4,000",
+                        currency: "CAD"
+                    },
+                    {
+                        name: "Himalayas",
+                        image: "himalayas.jpeg",
+                        details: "The Himalayas offer breathtaking mountain scenery, trekking opportunities, and spiritual experiences. It's a perfect destination for adventure seekers and nature lovers.",
+                        link: "https://www.himalayas.com",
+                        bestMonths: "April to June and September to November",
+                        cost: "$1,500 - $3,000",
+                        currency: "INR"
+                    }
+                ],
+                city: [
+                    {
+                        name: "New York",
+                        image: "new_york.jpg",
+                        details: "New York City is a bustling metropolis known for its iconic landmarks, diverse culture, and endless entertainment options. It's perfect for sightseeing and cultural experiences.",
+                        link: "https://www.nycgo.com",
+                        bestMonths: "April to June and September to November",
+                        cost: "$2,000 - $4,000",
+                        currency: "USD"
+                    },
+                    {
+                        name: "Tokyo",
+                        image: "tokyo.jpeg",
+                        details: "Tokyo is a vibrant city with a unique blend of modernity and tradition. Enjoy its bustling streets, historic temples, and cutting-edge technology.",
+                        link: "https://www.gotokyo.org/en/",
+                        bestMonths: "March to May and October to November",
+                        cost: "$2,500 - $4,000",
+                        currency: "JPY"
+                    },
+                    {
+                        name: "Paris",
+                        image: "paris.jpeg",
+                        details: "Paris is famous for its stunning architecture, art museums, and romantic atmosphere. It's a perfect destination for cultural experiences and relaxation.",
+                        link: "https://www.paris.com",
+                        bestMonths: "April to June and September to November",
+                        cost: "$2,000 - $3,500",
+                        currency: "EUR"
+                    }
+                ],
+                countryside: [
+                    {
+                        name: "Tuscany",
+                        image: "tuscany.jpg",
+                        details: "Tuscany is famous for its rolling hills, vineyards, and historic towns. Perfect for enjoying scenic landscapes and cultural heritage.",
+                        link: "https://www.visittuscany.com/en/",
+                        bestMonths: "April to June and September to October",
+                        cost: "$2,000 - $4,000",
+                        currency: "EUR"
+                    },
+                    {
+                        name: "Bavaria",
+                        image: "bavaria.jpeg",
+                        details: "Bavaria is known for its picturesque countryside, medieval castles, and vibrant festivals.",
+                        link: "https://www.bavaria.travel",
+                        bestMonths: "May to September",
+                        cost: "$1,800 - $3,000",
+                        currency: "EUR"
+                    },
+                    {
+                        name: "Cotswolds",
+                        image: "cotswolds.jpeg",
+                        details: "The Cotswolds are famous for their charming villages, rolling hills, and historic towns. It's a perfect destination for relaxation and cultural experiences.",
+                        link: "https://www.visitcotswolds.com",
+                        bestMonths: "April to June and September to October",
+                        cost: "$1,500 - $3,000",
+                        currency: "GBP"
+                    }
+                ]
+            };
+
+            nextButtons.forEach((button, index) => {
+                button.addEventListener('click', () => {
+                    if (index < questions.length - 1) {
+                        questions[index].style.display = 'none';
+                        questions[index + 1].style.display = 'block';
+                    }
+                });
+            });
+
+            form.addEventListener('submit', function(event) {
+                event.preventDefault();
+                const destination = form.destination.value;
+                const recommendedDestinations = destinations[destination];
+                
+                let resultHTML = '<h2>Thank you for completing the survey!</h2>';
+                resultHTML += '<p>Based on your preferences, we recommend visiting the following destinations:</p>';
+
+                recommendedDestinations.forEach(dest => {
+                    resultHTML += `
+                        <div class="horizontal-card">
+                            <img src="${dest.image}" alt="${dest.name}">
+                            <h3>${dest.name}</h3>
+                            <p>${dest.details}</p>
+                            <p>Best time to visit: ${dest.bestMonths}</p>
+                            <p>Estimated Cost: ${dest.cost}</p>
+                            <p>For more information, visit <a href="${dest.link}" target="_blank">here</a></p>
+                        </div>
+                    `;
+                    destinationCurrency = dest.currency; 
+                });
+
+                result.style.display = 'block';
+                result.innerHTML = resultHTML;
+
+                converter.style.display = 'block';
+                updateCurrencyOptions();
+            });
+
+            function updateCurrencyOptions() {
+                const availableCurrencies = ['INR', 'USD', destinationCurrency];
+                const uniqueCurrencies = [...new Set(availableCurrencies)];
+
+                inputCurrency.innerHTML = '';
+                uniqueCurrencies.forEach(currency => {
+                    inputCurrency.innerHTML += `<option value="${currency}">${currency}</option>`;
+                });
+            }
+
+            function convertCurrency() {
+                const amountValue = parseFloat(inputAmount.value) || 0;
+                const inputCurr = inputCurrency.value;
+
+                const exchangeRates = {
+                    EUR: 88.5,
+                    GBP: 103,
+                    JPY: 0.67,
+                    AUD: 50,
+                    CAD: 56,
+                    INR: 1, 
+                    CHF: 92,
+                    USD: 83 
+                };
+
+                let convertedAmount = 0;
+                if (inputCurr === 'USD') {
+                    convertedAmount = (amountValue * 83) / exchangeRates[destinationCurrency];
+                } else if (inputCurr === 'INR') {
+                    convertedAmount = amountValue / exchangeRates[destinationCurrency];
+                }
+
+                conversionResult.innerText = `Converted Amount: ${convertedAmount.toFixed(2)} ${destinationCurrency}`;
+            }
+
+            inputCurrency.addEventListener('change', convertCurrency);
+            inputAmount.addEventListener('input', convertCurrency);
+        });
+    </script>
+</body>
+</html>
